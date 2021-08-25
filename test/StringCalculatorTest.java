@@ -12,4 +12,12 @@ public class StringCalculatorTest
         assertEquals(0, calculator.add(" "), 0);
     }
 
+    @Test
+    public void testSumForSingleNumber()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(1, calculator.add("1"), 0);
+        assertEquals(0, calculator.add("0"), 0);
+    }
+
 }
