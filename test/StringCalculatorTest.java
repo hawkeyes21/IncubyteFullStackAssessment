@@ -29,4 +29,11 @@ public class StringCalculatorTest
         assertEquals(-10, calculator.add("-500,490"), 0);
     }
 
+    @Test
+    public void testSumForStringWithUnknownCountOfNumber()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(35, calculator.add("20,10,5"), 0);
+    }
+
 }
