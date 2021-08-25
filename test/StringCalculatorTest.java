@@ -42,6 +42,8 @@ public class StringCalculatorTest
     {
         StringCalculator calculator = new StringCalculator();
         assertEquals(14, calculator.add("5\n7,2"), 0);
+        assertEquals(9, calculator.add("3\n4\n2"), 0);
+        assertEquals(14, calculator.add("-3,4,2\n6,5"), 0);
     }
 
 }
