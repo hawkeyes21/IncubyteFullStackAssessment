@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class StringCalculator
 {
@@ -9,21 +9,42 @@ public class StringCalculator
             return 0;
         }
         int sum = 0;
-        String regex = "[,\n]";
+        String[] splitNumbers = splitNumbers(numbers);
+        for(String s : splitNumbers)
+        {
+            sum += Integer.parseInt(s);
+        }
+        return sum;
+    }
+
+    private String[] splitNumbers(String numbers)
+    {
         if(numbers.startsWith("//"))
         {
-            String customDelimiter = String.valueOf(numbers.charAt(2));
-            regex = "[,\n/" + customDelimiter + "]";
+            return splitNumbersUsingSpecialDelimiter(numbers);
         }
+        return splitNumbersUsingDefaultDelimiter(numbers);
+    }
+
+    private String[] splitNumbersUsingDefaultDelimiter(String numbers)
+    {
+        String regex = "[,\n]";
+        return numbers.split(regex);
+    }
+
+    private String[] splitNumbersUsingSpecialDelimiter(String numbers)
+    {
+        String specialDelimiter = String.valueOf(numbers.charAt(2));
+        String regex = "[,\n" + specialDelimiter + "/]";
         String[] splitNumbers = numbers.split(regex);
-        System.out.println(Arrays.toString(splitNumbers));
+        ArrayList<String> finalList = new ArrayList<>();
         for(String s : splitNumbers)
         {
             if(!s.isEmpty())
             {
-                sum += Integer.parseInt(s);
+                finalList.add(s);
             }
         }
-        return sum;
+        return finalList.toArray(new String[0]);
     }
 }
