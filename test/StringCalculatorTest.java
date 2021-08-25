@@ -37,4 +37,11 @@ public class StringCalculatorTest
         assertEquals(0, calculator.add("3,5,-8,0"), 0);
     }
 
+    @Test
+    public void testSumForStringWithNewlineAsDelimiter()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(14, calculator.add("5\n7,2"), 0);
+    }
+
 }
