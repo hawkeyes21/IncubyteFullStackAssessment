@@ -6,11 +6,11 @@ public class StringCalculator
         {
             return 0;
         }
-        if(numbers.contains(","))
+        int sum = 0;
+        for(String s : numbers.split(","))
         {
-            String[] splitNumbers = numbers.split(",");
-            return Integer.parseInt(splitNumbers[0]) + Integer.parseInt(splitNumbers[1]);
+            sum += Integer.parseInt(s);
         }
-        return Integer.parseInt(numbers);
+        return sum;
     }
 }

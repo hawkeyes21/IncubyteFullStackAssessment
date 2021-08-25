@@ -9,7 +9,6 @@ public class StringCalculatorTest
     {
         StringCalculator calculator = new StringCalculator();
         assertEquals(0, calculator.add(""), 0);
-        assertEquals(0, calculator.add(" "), 0);
     }
 
     @Test
@@ -34,6 +33,8 @@ public class StringCalculatorTest
     {
         StringCalculator calculator = new StringCalculator();
         assertEquals(35, calculator.add("20,10,5"), 0);
+        assertEquals(10, calculator.add("1,1,1,1,6"), 0);
+        assertEquals(0, calculator.add("3,5,-8,0"), 0);
     }
 
 }
