@@ -50,7 +50,9 @@ public class StringCalculatorTest
     public void testSumForStringWhichSupportsDifferentDelimiters()
     {
         StringCalculator calculator = new StringCalculator();
-        assertEquals(3, calculator.add("//;\\n1;2"), 0);
+        assertEquals(3, calculator.add("//;\n1;2"), 0);
+        assertEquals(30, calculator.add("//?1?2?27"), 0);
+        assertEquals(0, calculator.add("//,1,2\n-3"), 0);
     }
 
 }

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class StringCalculator
 {
     public int add(String numbers)
@@ -7,9 +9,20 @@ public class StringCalculator
             return 0;
         }
         int sum = 0;
-        for(String s : numbers.split("[,\n]"))
+        String regex = "[,\n]";
+        if(numbers.startsWith("//"))
         {
-            sum += Integer.parseInt(s);
+            String customDelimiter = String.valueOf(numbers.charAt(2));
+            regex = "[,\n/" + customDelimiter + "]";
+        }
+        String[] splitNumbers = numbers.split(regex);
+        System.out.println(Arrays.toString(splitNumbers));
+        for(String s : splitNumbers)
+        {
+            if(!s.isEmpty())
+            {
+                sum += Integer.parseInt(s);
+            }
         }
         return sum;
     }
