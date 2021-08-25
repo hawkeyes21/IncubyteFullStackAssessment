@@ -46,4 +46,11 @@ public class StringCalculatorTest
         assertEquals(14, calculator.add("-3,4,2\n6,5"), 0);
     }
 
+    @Test
+    public void testSumForStringWhichSupportsDifferentDelimiters()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(3, calculator.add("//;\\n1;2"), 0);
+    }
+
 }
