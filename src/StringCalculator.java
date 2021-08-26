@@ -11,8 +11,8 @@ public class StringCalculator {
     }
 
     private String[] splitNumbersIntoStringArray(String numbers) {
-        if (numbers.startsWith("//")) {
-            return splitNumbersUsingSpecialDelimiter(numbers);
+        if (stringContainsCustomDelimiters(numbers)) {
+            return splitNumbersUsingCustomDelimiter(numbers);
         }
         return splitNumbersUsingDefaultDelimiter(numbers);
     }
@@ -22,32 +22,32 @@ public class StringCalculator {
         return numbers.split(regex);
     }
 
-    private String[] splitNumbersUsingSpecialDelimiter(String numbers) {
-        String delimiter = String.valueOf(numbers.charAt(2));
-        if(numbers.contains("["))
-        {
-            String multipleDelimiters = getAllDelimitersDefinedByUser(numbers);
+    private String[] splitNumbersUsingCustomDelimiter(String numbers) {
+        String regex = String.valueOf(numbers.charAt(2));
+        if (stringHasCustomDelimiters(numbers)) {
+            String customDelimiters = getAllDelimitersDefinedByUser(numbers);
             //noinspection RegExpRedundantEscape
-            delimiter = multipleDelimiters + "\\[" + "\\]";
+            regex = customDelimiters + "\\[" + "\\]";
         }
-        String regex = "[,\n" + delimiter + "/]";
-        ArrayList<String> finalList = new ArrayList<>(Arrays.asList(numbers.split(regex)));
-        finalList.removeIf(String::isEmpty);
-        return finalList.toArray(new String[0]);
+        regex = "[,\n" + regex + "/]";
+        return stringArrayWhichContainsOnlyNumbers(numbers, regex);
     }
 
-    private String getAllDelimitersDefinedByUser(String numbers)
-    {
+    private String getAllDelimitersDefinedByUser(String numbers) {
         String[] tempSplit = numbers.substring(2).split("\\[");
         StringBuilder delimiters = new StringBuilder();
-        for(String s : tempSplit)
-        {
-            if(!s.isEmpty())
-            {
+        for (String s : tempSplit) {
+            if (!s.isEmpty()) {
                 delimiters.append(s.charAt(0));
             }
         }
         return delimiters.toString();
+    }
+
+    private String[] stringArrayWhichContainsOnlyNumbers(String numbers, String regex) {
+        ArrayList<String> finalList = new ArrayList<>(Arrays.asList(numbers.split(regex)));
+        finalList.removeIf(String::isEmpty);
+        return finalList.toArray(new String[0]);
     }
 
     private int getIntegerSumFromSplitNumbers(String[] splitNumbers) {
@@ -57,28 +57,19 @@ public class StringCalculator {
             if (numberIsNegative(currentNumberIntValue)) {
                 throwExceptionBecauseNegativeNumberWasFound(splitNumbers);
             }
-            if(numberIsLessThanEqualToThousand(currentNumberIntValue)) {
+            if (numberIsLessThanEqualToThousand(currentNumberIntValue)) {
                 sum += Integer.parseInt(s);
             }
         }
         return sum;
     }
 
-    private boolean numberIsLessThanEqualToThousand(int currentNumberIntValue) {
-        return currentNumberIntValue <= 1000;
-    }
-
-    private boolean numberIsNegative(int currentNumberIntValue) {
-        return currentNumberIntValue < 0;
-    }
-
-    private void throwExceptionBecauseNegativeNumberWasFound(String[] splitNumbers)
-    {
-        ArrayList<Integer> negativeNumbers = generateNegativeNumbersFromSplitNumbers(splitNumbers);
+    private void throwExceptionBecauseNegativeNumberWasFound(String[] splitNumbers) {
+        ArrayList<Integer> negativeNumbers = getNegativeNumbersFromSplitNumbers(splitNumbers);
         throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
     }
 
-    private ArrayList<Integer> generateNegativeNumbersFromSplitNumbers(String[] splitNumbers) {
+    private ArrayList<Integer> getNegativeNumbersFromSplitNumbers(String[] splitNumbers) {
         ArrayList<Integer> negativeNumbers = new ArrayList<>();
         for (String s : splitNumbers) {
             if (Integer.parseInt(s) < 0) {
@@ -87,4 +78,16 @@ public class StringCalculator {
         }
         return negativeNumbers;
     }
+
+    private boolean numberIsNegative(int currentNumberIntValue) {
+        return currentNumberIntValue < 0;
+    }
+
+    private boolean numberIsLessThanEqualToThousand(int currentNumberIntValue) {
+        return currentNumberIntValue <= 1000;
+    }
+
+    private boolean stringHasCustomDelimiters(String numbers) { return numbers.contains("[") && numbers.contains("]"); }
+
+    private boolean stringContainsCustomDelimiters(String numbers) { return numbers.startsWith("//"); }
 }
