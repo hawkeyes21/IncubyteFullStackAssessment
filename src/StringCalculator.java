@@ -23,16 +23,31 @@ public class StringCalculator {
     }
 
     private String[] splitNumbersUsingSpecialDelimiter(String numbers) {
-        String specialDelimiter = String.valueOf(numbers.charAt(2));
-        if(specialDelimiter.equals("["))
+        String delimiter = String.valueOf(numbers.charAt(2));
+        if(numbers.contains("["))
         {
-
-            System.out.println(specialDelimiter);
+            String multipleDelimiters = getAllDelimitersDefinedByUser(numbers);
+            //noinspection RegExpRedundantEscape
+            delimiter = multipleDelimiters + "\\[" + "\\]";
         }
-        String regex = "[,\n" + specialDelimiter + "/]";
+        String regex = "[,\n" + delimiter + "/]";
         ArrayList<String> finalList = new ArrayList<>(Arrays.asList(numbers.split(regex)));
         finalList.removeIf(String::isEmpty);
         return finalList.toArray(new String[0]);
+    }
+
+    private String getAllDelimitersDefinedByUser(String numbers)
+    {
+        String[] tempSplit = numbers.substring(2).split("\\[");
+        StringBuilder delimiters = new StringBuilder();
+        for(String s : tempSplit)
+        {
+            if(!s.isEmpty())
+            {
+                delimiters.append(s.charAt(0));
+            }
+        }
+        return delimiters.toString();
     }
 
     private int getIntegerSumFromSplitNumbers(String[] splitNumbers) {

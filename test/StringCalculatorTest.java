@@ -90,6 +90,7 @@ public class StringCalculatorTest
     public void testForStringWithMultipleCustomerDelimiters()
     {
         StringCalculator calculator = new StringCalculator();
-        assertEquals(6, calculator.add("//[*][%]\\n1*2%3"), 0);
+        assertEquals(6, calculator.add("//[*][%]\n1*2%3"), 0);
+        assertEquals(18, calculator.add("//['][+][*]\n1*2+3'12"), 0);
     }
 }
