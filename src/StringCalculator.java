@@ -8,8 +8,13 @@ public class StringCalculator
         {
             return 0;
         }
-        int sum = 0;
         String[] splitNumbers = splitNumbers(numbers);
+        return getIntegerSumFromSplitNumbers(splitNumbers);
+    }
+
+    private int getIntegerSumFromSplitNumbers(String[] splitNumbers)
+    {
+        int sum = 0;
         for(String s : splitNumbers)
         {
             sum += Integer.parseInt(s);
