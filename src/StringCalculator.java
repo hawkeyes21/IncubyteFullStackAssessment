@@ -17,6 +17,10 @@ public class StringCalculator
         int sum = 0;
         for(String s : splitNumbers)
         {
+            if(Integer.parseInt(s) < 0)
+            {
+                throw new IllegalArgumentException("negatives not allowed: " + s);
+            }
             sum += Integer.parseInt(s);
         }
         return sum;
