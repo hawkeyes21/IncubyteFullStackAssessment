@@ -23,8 +23,14 @@ public class StringCalculator {
     }
 
     private String[] splitNumbersUsingSpecialDelimiter(String numbers) {
+        // "//[***]\n1***2***3"
+        // "//;\n1;2"
         String specialDelimiter = String.valueOf(numbers.charAt(2));
-        String regex = "[,\n" + specialDelimiter + "/]";
+        if(specialDelimiter.equals("["))
+        {
+            specialDelimiter = numbers.charAt(3) + "\\[" + "\\]";
+        }
+        String regex = "[,\\n" + specialDelimiter + "/]";
         ArrayList<String> finalList = new ArrayList<>(Arrays.asList(numbers.split(regex)));
         finalList.removeIf(String::isEmpty);
         return finalList.toArray(new String[0]);
@@ -67,6 +73,4 @@ public class StringCalculator {
         }
         return negativeNumbers;
     }
-
-
 }

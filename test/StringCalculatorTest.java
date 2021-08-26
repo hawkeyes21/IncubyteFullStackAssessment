@@ -83,6 +83,6 @@ public class StringCalculatorTest
     {
         StringCalculator calculator = new StringCalculator();
         assertEquals(6, calculator.add("//[***]\n1***2***3"), 0);
+        assertEquals(10, calculator.add("//[&&&&&]\n5&&&&&2&&&&&3"), 0);
     }
-
 }
