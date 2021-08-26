@@ -93,4 +93,12 @@ public class StringCalculatorTest
         assertEquals(6, calculator.add("//[*][%]\n1*2%3"), 0);
         assertEquals(18, calculator.add("//['][+][*]\n1*2+3'12"), 0);
     }
+
+    @Test
+    public void testForStringWithMultipleCustomerDelimitersWithDynamicLength()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(6, calculator.add("//[***][%%]\n1**2%%3"), 0);
+        assertEquals(47, calculator.add("//[+][&&]\n40+5&&1+1"), 0);
+    }
 }

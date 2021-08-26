@@ -23,13 +23,12 @@ public class StringCalculator {
     }
 
     private String[] splitNumbersUsingCustomDelimiter(String numbers) {
-        String regex = String.valueOf(numbers.charAt(2));
-        if (stringHasCustomDelimiters(numbers)) {
+        String regex = getCustomDelimiterDefinedByUser(numbers);
+        if (stringHasMultipleCustomDelimiters(numbers)) {
             String customDelimiters = getAllDelimitersDefinedByUser(numbers);
-            //noinspection RegExpRedundantEscape
-            regex = customDelimiters + "\\[" + "\\]";
+            regex = customDelimiters + appendAngularBrackets();
         }
-        regex = "[,\n" + regex + "/]";
+        regex = "[//,\n" + regex + "]";
         return stringArrayWhichContainsOnlyNumbers(numbers, regex);
     }
 
@@ -87,7 +86,11 @@ public class StringCalculator {
         return currentNumberIntValue <= 1000;
     }
 
-    private boolean stringHasCustomDelimiters(String numbers) { return numbers.contains("[") && numbers.contains("]"); }
+    private boolean stringHasMultipleCustomDelimiters(String numbers) { return numbers.contains("[") && numbers.contains("]"); }
 
     private boolean stringContainsCustomDelimiters(String numbers) { return numbers.startsWith("//"); }
+
+    private String getCustomDelimiterDefinedByUser(String numbers) { return numbers.charAt(2) + "" ; }
+
+    private String appendAngularBrackets() { return "\\[" + "\\]"; }
 }
