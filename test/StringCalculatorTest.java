@@ -78,4 +78,11 @@ public class StringCalculatorTest
         assertEquals(39, calculator.add("10,14,15,48595"), 0);
     }
 
+    @Test
+    public void testForStringWithCustomDelimiterAndOfDynamicLength()
+    {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(6, calculator.add("//[***]\n1***2***3"), 0);
+    }
+
 }
