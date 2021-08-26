@@ -74,6 +74,8 @@ public class StringCalculatorTest
     {
         StringCalculator calculator = new StringCalculator();
         assertEquals(2, calculator.add("2,1001"), 0);
+        assertEquals(1050, calculator.add("50,1000"), 0);
+        assertEquals(39, calculator.add("10,14,15,48595"), 0);
     }
 
 }

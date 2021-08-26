@@ -37,11 +37,14 @@ public class StringCalculator {
     private int getIntegerSumFromSplitNumbers(String[] splitNumbers) {
         int sum = 0;
         for (String s : splitNumbers) {
-            if (Integer.parseInt(s) < 0) {
+            int currentNumberIntValue = Integer.parseInt(s);
+            if (currentNumberIntValue < 0) {
                 ArrayList<Integer> negativeNumbers = getNegativeNumbersFromSplitNumbers(splitNumbers);
                 throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
             }
-            sum += Integer.parseInt(s);
+            if(currentNumberIntValue <= 1000) {
+                sum += Integer.parseInt(s);
+            }
         }
         return sum;
     }
