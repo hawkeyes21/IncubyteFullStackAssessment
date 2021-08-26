@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StringCalculator {
     public int add(String numbers) {
@@ -24,13 +25,8 @@ public class StringCalculator {
     private String[] splitNumbersUsingSpecialDelimiter(String numbers) {
         String specialDelimiter = String.valueOf(numbers.charAt(2));
         String regex = "[,\n" + specialDelimiter + "/]";
-        String[] splitNumbers = numbers.split(regex);
-        ArrayList<String> finalList = new ArrayList<>();
-        for (String s : splitNumbers) {
-            if (!s.isEmpty()) {
-                finalList.add(s);
-            }
-        }
+        ArrayList<String> finalList = new ArrayList<>(Arrays.asList(numbers.split(regex)));
+        finalList.removeIf(String::isEmpty);
         return finalList.toArray(new String[0]);
     }
 
@@ -38,18 +34,31 @@ public class StringCalculator {
         int sum = 0;
         for (String s : splitNumbers) {
             int currentNumberIntValue = Integer.parseInt(s);
-            if (currentNumberIntValue < 0) {
-                ArrayList<Integer> negativeNumbers = getNegativeNumbersFromSplitNumbers(splitNumbers);
-                throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
+            if (numberIsNegative(currentNumberIntValue)) {
+                throwExceptionBecauseNegativeNumberWasFound(splitNumbers);
             }
-            if(currentNumberIntValue <= 1000) {
+            if(numberIsLessThanEqualToThousand(currentNumberIntValue)) {
                 sum += Integer.parseInt(s);
             }
         }
         return sum;
     }
 
-    private ArrayList<Integer> getNegativeNumbersFromSplitNumbers(String[] splitNumbers) {
+    private boolean numberIsLessThanEqualToThousand(int currentNumberIntValue) {
+        return currentNumberIntValue <= 1000;
+    }
+
+    private boolean numberIsNegative(int currentNumberIntValue) {
+        return currentNumberIntValue < 0;
+    }
+
+    private void throwExceptionBecauseNegativeNumberWasFound(String[] splitNumbers)
+    {
+        ArrayList<Integer> negativeNumbers = generateNegativeNumbersFromSplitNumbers(splitNumbers);
+        throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
+    }
+
+    private ArrayList<Integer> generateNegativeNumbersFromSplitNumbers(String[] splitNumbers) {
         ArrayList<Integer> negativeNumbers = new ArrayList<>();
         for (String s : splitNumbers) {
             if (Integer.parseInt(s) < 0) {
