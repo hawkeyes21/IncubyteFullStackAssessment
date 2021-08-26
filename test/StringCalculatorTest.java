@@ -60,9 +60,13 @@ public class StringCalculatorTest
     {
         StringCalculator calculator = new StringCalculator();
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("5,4,-1"));
-        assertEquals("negatives not allowed: -1", exception.getMessage());
-        exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("5,4,-1, -5"));
-        assertEquals("negatives not allowed: -1, -5", exception.getMessage());
+        assertEquals("negatives not allowed: [-1]", exception.getMessage());
+
+        exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("5,4,-1,-5"));
+        assertEquals("negatives not allowed: [-1, -5]", exception.getMessage());
+
+        exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("-9,-7,4,-5"));
+        assertEquals("negatives not allowed: [-9, -7, -5]", exception.getMessage());
     }
 
 }

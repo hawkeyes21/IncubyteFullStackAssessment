@@ -12,20 +12,6 @@ public class StringCalculator
         return getIntegerSumFromSplitNumbers(splitNumbers);
     }
 
-    private int getIntegerSumFromSplitNumbers(String[] splitNumbers)
-    {
-        int sum = 0;
-        for(String s : splitNumbers)
-        {
-            if(Integer.parseInt(s) < 0)
-            {
-                throw new IllegalArgumentException("negatives not allowed: " + s);
-            }
-            sum += Integer.parseInt(s);
-        }
-        return sum;
-    }
-
     private String[] splitNumbers(String numbers)
     {
         if(numbers.startsWith("//"))
@@ -56,4 +42,34 @@ public class StringCalculator
         }
         return finalList.toArray(new String[0]);
     }
+
+    private int getIntegerSumFromSplitNumbers(String[] splitNumbers)
+    {
+        int sum = 0;
+        for(String s : splitNumbers)
+        {
+            if(Integer.parseInt(s) < 0)
+            {
+                ArrayList<Integer> negativeNumbers = getNegativeNumbersFromSplitNumbers(splitNumbers);
+                throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
+            }
+            sum += Integer.parseInt(s);
+        }
+        return sum;
+    }
+
+    private ArrayList<Integer> getNegativeNumbersFromSplitNumbers(String[] splitNumbers)
+    {
+        ArrayList<Integer> negativeNumbers = new ArrayList<>();
+        for(String s : splitNumbers)
+        {
+            if(Integer.parseInt(s) < 0)
+            {
+                negativeNumbers.add(Integer.parseInt(s));
+            }
+        }
+        return  negativeNumbers;
+    }
+
+
 }
