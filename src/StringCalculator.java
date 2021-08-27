@@ -7,8 +7,22 @@ public class StringCalculator {
         if (numbers.isEmpty()) {
             return 0;
         }
+        return getIntegerSum(numbers);
+    }
+
+    private int getIntegerSum(String numbers) {
         String[] splitNumbers = splitNumbersIntoStringArray(numbers);
-        return getIntegerSumFromSplitNumbers(splitNumbers);
+        int sum = 0;
+        for (String s : splitNumbers) {
+            int currentNumberIntValue = Integer.parseInt(s);
+            if (numberIsNegative(currentNumberIntValue)) {
+                throwExceptionBecauseNegativeNumberWasFound(splitNumbers);
+            }
+            if (numberIsLessThanEqualToThousand(currentNumberIntValue)) {
+                sum += Integer.parseInt(s);
+            }
+        }
+        return sum;
     }
 
     private String[] splitNumbersIntoStringArray(String numbers) {
@@ -24,10 +38,12 @@ public class StringCalculator {
     }
 
     private String[] splitNumbersUsingCustomDelimiter(String numbers) {
-        String regex = getCustomDelimiterDefinedByUser(numbers);
+        String regex;
         if (stringHasMultipleCustomDelimiters(numbers)) {
             String customDelimiters = getAllDelimitersDefinedByUser(numbers);
             regex = customDelimiters + appendAngularBrackets();
+        } else {
+            regex = getSingleCustomDelimiterDefinedByUser(numbers);
         }
         regex = "[//,\n" + regex + "]";
         return stringArrayWhichContainsOnlyNumbers(numbers, regex);
@@ -50,20 +66,6 @@ public class StringCalculator {
         return finalList.toArray(new String[0]);
     }
 
-    private int getIntegerSumFromSplitNumbers(String[] splitNumbers) {
-        int sum = 0;
-        for (String s : splitNumbers) {
-            int currentNumberIntValue = Integer.parseInt(s);
-            if (numberIsNegative(currentNumberIntValue)) {
-                throwExceptionBecauseNegativeNumberWasFound(splitNumbers);
-            }
-            if (numberIsLessThanEqualToThousand(currentNumberIntValue)) {
-                sum += Integer.parseInt(s);
-            }
-        }
-        return sum;
-    }
-
     private void throwExceptionBecauseNegativeNumberWasFound(String[] splitNumbers) {
         String negativeNumbers = getNegativeNumbersFromSplitNumbers(splitNumbers);
         throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
@@ -79,6 +81,8 @@ public class StringCalculator {
         return negativeNumbers.stream().map(String::valueOf).collect(Collectors.joining(","));
     }
 
+    private boolean stringContainsCustomDelimiters(String numbers) { return numbers.startsWith("//"); }
+
     private boolean numberIsNegative(int currentNumberIntValue) {
         return currentNumberIntValue < 0;
     }
@@ -89,9 +93,7 @@ public class StringCalculator {
 
     private boolean stringHasMultipleCustomDelimiters(String numbers) { return numbers.contains("[") && numbers.contains("]"); }
 
-    private boolean stringContainsCustomDelimiters(String numbers) { return numbers.startsWith("//"); }
-
-    private String getCustomDelimiterDefinedByUser(String numbers) { return numbers.charAt(2) + "" ; }
+    private String getSingleCustomDelimiterDefinedByUser(String numbers) { return numbers.charAt(2) + "" ; }
 
     private String appendAngularBrackets() { return "\\[" + "\\]"; }
 }
