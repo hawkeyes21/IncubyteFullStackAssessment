@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class StringCalculator {
     public int add(String numbers) {
@@ -64,18 +65,18 @@ public class StringCalculator {
     }
 
     private void throwExceptionBecauseNegativeNumberWasFound(String[] splitNumbers) {
-        ArrayList<Integer> negativeNumbers = getNegativeNumbersFromSplitNumbers(splitNumbers);
+        String negativeNumbers = getNegativeNumbersFromSplitNumbers(splitNumbers);
         throw new IllegalArgumentException("negatives not allowed: " + negativeNumbers);
     }
 
-    private ArrayList<Integer> getNegativeNumbersFromSplitNumbers(String[] splitNumbers) {
+    private String getNegativeNumbersFromSplitNumbers(String[] splitNumbers) {
         ArrayList<Integer> negativeNumbers = new ArrayList<>();
         for (String s : splitNumbers) {
             if (Integer.parseInt(s) < 0) {
                 negativeNumbers.add(Integer.parseInt(s));
             }
         }
-        return negativeNumbers;
+        return negativeNumbers.stream().map(String::valueOf).collect(Collectors.joining(","));
     }
 
     private boolean numberIsNegative(int currentNumberIntValue) {
