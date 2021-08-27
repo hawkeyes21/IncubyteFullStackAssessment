@@ -1,5 +1,5 @@
 # IncubyteFullStackAssessment
-Repo for Incubyte Full Stack Assessment Test
+Repo for Incubyte Full Stack Assessment Test <br />
 This repo implements the "String Calculator" Kata using TDD, which can be found here ---> https://osherove.com/tdd-kata-1 
 Following is the project structure:-
   1. Instructions.txt: contains all the tasks which are to be implemented.
